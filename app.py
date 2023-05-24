@@ -17,7 +17,7 @@ plt.style.use('fivethirtyeight')
 
 yf.pdr_override()
 
-st.title("stock price prediction")
+st.title("Stock price prediction")
 
 # Text input
 #user_input = st.text_input("Enter the Stock Code", 'AAPL')
@@ -25,13 +25,13 @@ st.title("stock price prediction")
 @st.cache_data
 def fun(user_input):
     # Get the stock qoute
-    df = pdr.get_data_yahoo(user_input, start="2010-1-15", end="2022-12-21")
+    df = pdr.get_data_yahoo(user_input, start="2010-1-15", end="2023-03-21")
     # df = web.DataReader('AAPL', data_source='yahoo', start='2007-10-01', end='2021-05-04')
     # show the data
 
     # df
 
-    st.subheader('Date from 2010 to 2022')
+    st.subheader('Date from 2010 to 2023')
     st.write(df.describe())
 
     # df.shape
@@ -82,7 +82,7 @@ def fun(user_input):
     model.compile(optimizer='adam', loss='mean_squared_error')
 
     # train the model
-    model.fit(x_train, y_train, batch_size=1, epochs=1)
+    model.fit(x_train, y_train, batch_size=1, epochs=3)
 
     # Create the testing data set
     # Create a new array containing scaled values from index 1746 to 2257
@@ -173,7 +173,7 @@ st.write("""
 |NFLX                                          |Netflix, Inc.             |
 |AAPL                                          |APPLE                     |
 
-for more code condider the link ("https://finance.yahoo.com/lookup/") 
+for more code consider the link ("https://finance.yahoo.com/lookup/") 
 
  """)
 # streamlit run app.py
