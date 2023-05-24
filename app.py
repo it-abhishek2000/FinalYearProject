@@ -82,7 +82,7 @@ def fun(user_input):
     model.compile(optimizer='adam', loss='mean_squared_error')
 
     # train the model
-    model.fit(x_train, y_train, batch_size=1, epochs=)
+    model.fit(x_train, y_train, batch_size=1, epochs=1)
 
     # Create the testing data set
     # Create a new array containing scaled values from index 1746 to 2257
