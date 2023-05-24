@@ -82,7 +82,7 @@ def fun(user_input):
     model.compile(optimizer='adam', loss='mean_squared_error')
 
     # train the model
-    model.fit(x_train, y_train, batch_size=1, epochs=3)
+    model.fit(x_train, y_train, batch_size=1, epochs=1)
 
     # Create the testing data set
     # Create a new array containing scaled values from index 1746 to 2257
@@ -127,38 +127,38 @@ user_input = st.text_input("Enter the Stock Code", 'AAPL')
 if st.button("Submit"):
     model, scaler = fun(user_input)
 
-if st.button("Predit Stock For Today"):
-    model, scaler = fun(user_input)
-    date = date.today()
-    date200 = date-timedelta(days = 200)
-    print(date)
-    apple_quote = pdr.get_data_yahoo(
-        user_input, start=date200, end=date)
-    # Create a new dataFrame
-    new_df = apple_quote.filter(['Close'])
-    # Get the last 60 day closing price values and convert the dataframe to an array
-    last_60_days = new_df[-60:].values
-    # Scale the data to be values between 0 and 1
-    last_60_days_scaled = scaler.transform(last_60_days)
-    # Create an empty list
-    X_test = [last_60_days_scaled]
-    # Append the past 60 days
-    # Convert the X_test data set to a numpy array
-    X_test = np.array(X_test)
-    # Reshape the data
-    X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
-    # Get the predicted scaled price
-    pred_price = model.predict(X_test)
-    # Undo the Scaling
-    pred_price = scaler.inverse_transform(pred_price)
-    st.write("# Predicted price:")
-    st.write(pred_price[0][0])
-    apple_quote2 = pdr.get_data_yahoo(
-        user_input, start=date-timedelta(days=1), end=date)
-    st.write("""
-        # Original price:
-        """)
-    st.write(apple_quote2['Close'][0])
+    if st.button("Predit Stock For Today"):
+        #model, scaler = fun(user_input)
+        date = date.today()
+        date200 = date-timedelta(days = 200)
+        print(date)
+        apple_quote = pdr.get_data_yahoo(
+            user_input, start=date200, end=date)
+        # Create a new dataFrame
+        new_df = apple_quote.filter(['Close'])
+        # Get the last 60 day closing price values and convert the dataframe to an array
+        last_60_days = new_df[-60:].values
+        # Scale the data to be values between 0 and 1
+        last_60_days_scaled = scaler.transform(last_60_days)
+        # Create an empty list
+        X_test = [last_60_days_scaled]
+        # Append the past 60 days
+        # Convert the X_test data set to a numpy array
+        X_test = np.array(X_test)
+        # Reshape the data
+        X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
+        # Get the predicted scaled price
+        pred_price = model.predict(X_test)
+        # Undo the Scaling
+        pred_price = scaler.inverse_transform(pred_price)
+        st.write("# Predicted price:")
+        st.write(pred_price[0][0])
+        apple_quote2 = pdr.get_data_yahoo(
+            user_input, start=date-timedelta(days=1), end=date)
+        st.write("""
+            # Original price:
+            """)
+        st.write(apple_quote2['Close'][0])
 
 st.write("""
 # Stock prices codes with company name 
